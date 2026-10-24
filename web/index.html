@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Deterministic refund-agent evaluation workbench">
+  <title>Refund Agent Eval Lab</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <button class="mobile-menu" id="mobile-menu" aria-label="Open scenarios">☰</button>
+    <div class="brand">
+      <span class="brand-mark">RA</span>
+      <div><strong>Refund Agent Eval Lab</strong><span>Local evaluation workbench</span></div>
+    </div>
+    <div class="top-actions">
+      <button class="engine-badge" id="engine-info" title="Deterministic local engine">● Deterministic demo</button>
+      <span class="dataset">refund-suite v1</span>
+      <button class="button ghost" id="reset">Reset</button>
+      <button class="button primary" id="run">Run evaluation</button>
+    </div>
+  </header>
+
+  <div class="layout">
+    <aside class="sidebar" id="sidebar" aria-label="Evaluation scenarios">
+      <div class="sidebar-head">
+        <div><span class="eyebrow">Test catalog</span><h2>Scenarios</h2></div>
+        <button class="icon-button sidebar-close" id="sidebar-close" aria-label="Close scenarios">×</button>
+      </div>
+      <label class="search"><span>⌕</span><input id="search" type="search" placeholder="Search scenarios"></label>
+      <div class="filters" role="group" aria-label="Filter scenarios">
+        <button class="filter active" data-filter="all">All</button>
+        <button class="filter" data-filter="happy-path">Happy path</button>
+        <button class="filter" data-filter="edge-case">Edge</button>
+        <button class="filter" data-filter="safety">Safety</button>
+      </div>
+      <div class="scenario-list" id="scenario-list"></div>
+      <div class="suite-card">
+        <div><span class="eyebrow">Suite health</span><strong id="suite-health">Not run</strong></div>
+        <span id="suite-score">—</span>
+        <button class="button secondary full" id="run-all">Run all 8 scenarios</button>
+      </div>
+    </aside>
+    <button class="scrim" id="scrim" aria-label="Close scenarios"></button>
+
+    <main class="workspace">
+      <section class="hero panel">
+        <div class="hero-copy">
+          <span class="eyebrow" id="scenario-id">Select a scenario</span>
+          <h1 id="scenario-title">Evaluation workspace</h1>
+          <p id="scenario-purpose">Choose a fixture to inspect its expected behavior and run a deterministic evaluation.</p>
+        </div>
+        <div class="expected-card">
+          <span class="eyebrow">Expected outcome</span>
+          <strong id="expected-outcome">—</strong>
+          <span id="expected-total">No amount expected</span>
+        </div>
+      </section>
+
+      <section class="conversation-grid">
+        <article class="panel conversation">
+          <div class="panel-title"><div><span class="eyebrow">Scenario input</span><h2>Customer request</h2></div><span class="fixture-badge">Fixture</span></div>
+          <div class="message customer"><span class="avatar">CU</span><div><strong>Customer</strong><p id="customer-message">Select a scenario.</p></div></div>
+          <div class="facts" id="facts"></div>
+        </article>
+        <article class="panel result-card" id="result-card">
+          <div class="panel-title"><div><span class="eyebrow">Agent output</span><h2>Decision</h2></div><span class="status neutral" id="run-status">Not run</span></div>
+          <p class="agent-response" id="agent-response">The response, recommended action, and safety boundary will appear here.</p>
+          <div class="run-meta"><span id="run-id">No run ID</span><span id="run-engine">Local rules</span></div>
+        </article>
+      </section>
+
+      <section class="inspection-grid">
+        <article class="panel trace-panel">
+          <div class="panel-title">
+            <div><span class="eyebrow">Observable evidence</span><h2>Execution trace</h2></div>
+            <button class="button ghost compact" id="expand-all">Expand all</button>
+          </div>
+          <div class="empty-state" id="trace-empty"><span>⌁</span><strong>No trace yet</strong><p>Run the scenario to inspect ordered rules, tools, and guardrails.</p></div>
+          <ol class="trace" id="trace"></ol>
+        </article>
+
+        <article class="panel metrics-panel">
+          <div class="panel-title"><div><span class="eyebrow">Hard gates</span><h2>Evaluation metrics</h2></div><strong class="overall" id="overall-score">—</strong></div>
+          <div class="metric-grid" id="metrics">
+            <div class="metric-skeleton">Metrics appear after a run.</div>
+          </div>
+        </article>
+      </section>
+
+      <section class="panel regression-panel">
+        <div class="panel-title">
+          <div><span class="eyebrow">Stored in this browser</span><h2>Regression history</h2></div>
+          <button class="button ghost compact" id="clear-history">Clear history</button>
+        </div>
+        <div class="history-summary">
+          <div><span>Runs</span><strong id="history-count">0</strong></div>
+          <div><span>Pass rate</span><strong id="history-rate">—</strong></div>
+          <div><span>Latest score</span><strong id="history-latest">—</strong></div>
+        </div>
+        <div class="history-list" id="history"><div class="empty-history">Completed evaluations will appear here.</div></div>
+      </section>
+    </main>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <dialog id="engine-dialog">
+    <button class="dialog-close" id="dialog-close" aria-label="Close">×</button>
+    <span class="eyebrow">Engine boundary</span><h2>Deterministic by design</h2>
+    <p>Outputs and scores are produced locally from fixed rules. LangChain and DeepEval can replace the engine and evaluator through the same run contract.</p>
+    <p>No payment or external refund tool is exposed. Eligible requests stop at human review.</p>
+  </dialog>
+  <script src="/app.js"></script>
+</body>
+</html>

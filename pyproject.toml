@@ -1,0 +1,25 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "refund-agent-eval-lab"
+version = "1.0.0"
+description = "Deterministic refund-agent evaluation workbench inspired by the DeepEval and LangChain tutorial"
+requires-python = ">=3.11"
+license = {text = "MIT"}
+authors = [{name = "Iryna Tyshchenko"}]
+dependencies = []
+
+[project.optional-dependencies]
+live = ["langchain>=1.0", "langchain-openai>=1.0", "deepeval>=3.0", "pydantic>=2"]
+dev = ["pytest>=8"]
+
+[project.scripts]
+refund-eval = "refund_eval_lab.cli:main"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
